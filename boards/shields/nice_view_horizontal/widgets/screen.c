@@ -18,6 +18,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/usb.h>
 #include <zmk/wpm.h>
 
+#include "animation.h"
 #include "battery.h"
 #include "layer.h"
 #include "output.h"
@@ -48,10 +49,10 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     fill_background(canvas);
 
     // Draw widgets
-    draw_wpm_status(canvas, state);
+    // draw_wpm_status(canvas, state);
 
     // Rotate for horizontal display
-    rotate_canvas(canvas, cbuf);
+    // rotate_canvas(canvas, cbuf);
 }
 
 static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -200,6 +201,8 @@ ZMK_SUBSCRIPTION(widget_wpm_status, zmk_wpm_state_changed);
  * Initialization
  **/
 
+static lv_style_t style_rect;
+
 int zmk_widget_screen_init(struct zmk_widget_screen *widget, lv_obj_t *parent) {
     widget->obj = lv_obj_create(parent);
     lv_obj_set_size(widget->obj, SCREEN_HEIGHT, SCREEN_WIDTH);
@@ -216,11 +219,30 @@ int zmk_widget_screen_init(struct zmk_widget_screen *widget, lv_obj_t *parent) {
     lv_obj_align(bottom, LV_ALIGN_TOP_RIGHT, BUFFER_OFFSET_BOTTOM, 0);
     lv_canvas_set_buffer(bottom, widget->cbuf3, BUFFER_SIZE, BUFFER_SIZE, LV_IMG_CF_TRUE_COLOR);
 
+    // draw_animation(widget->obj);
+
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
     widget_layer_status_init();
     widget_output_status_init();
-    widget_wpm_status_init();
+    // widget_wpm_status_init();
+
+    // lv_obj_t *canvas_rect = lv_canvas_create(widget->obj);
+    // lv_obj_align(canvas_rect, LV_ALIGN_CENTER, 0, 0);
+    // lv_canvas_set_buffer(canvas_rect, widget->cbuf2, 40, 40, LV_IMG_CF_TRUE_COLOR);
+    //
+    // lv_draw_rect_dsc_t rect_white_dsc;
+    // init_rect_dsc(&rect_white_dsc, LVGL_BACKGROUND);
+    // lv_canvas_draw_rect(canvas_rect, 10, 5, 5, 10, &rect_white_dsc);
+
+    // lv_style_init(&style_rect);
+    // lv_style_set_bg_color(&style_rect, LVGL_FOREGROUND);
+    //
+    // lv_obj_t *rect = lv_obj_create(widget->obj);
+    // lv_obj_remove_style_all(rect);
+    // lv_obj_align(rect, LV_ALIGN_CENTER, 0, 0);
+    // lv_obj_set_size(rect, 20, 30);
+    // lv_obj_add_style(rect, &style_rect, 0);
 
     return 0;
 }

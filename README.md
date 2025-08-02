@@ -1,6 +1,6 @@
-# nice-view-gem
+# nice-view-horizontal
 
-![Preview](https://github.com/m165437/nice-view-gem/blob/main/.github/assets/preview.jpg?raw=true)
+![Preview](https://github.com/a-wark/nice-view-horizontal/blob/main/.github/assets/preview.jpg?raw=true)
 
 ### A sleek customization for the nice!view shield
 

@@ -23,11 +23,33 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
                         BUFFER_SIZE / 2, false);
 }
 
+void rotate_canvas_rect(lv_obj_t *canvas, lv_color_t cbuf[], lv_coord_t w, lv_coord_t h) {
+    static lv_color_t cbuf_tmp[TOP_CANVAS_PIXELS];
+    size_t size = (size_t)w * (size_t)h * sizeof(lv_color_t);
+    memcpy(cbuf_tmp, cbuf, size);
+
+    lv_img_dsc_t img;
+    img.data = (void *)cbuf_tmp;
+    img.header.cf = LV_IMG_CF_TRUE_COLOR;
+    img.header.w = w;
+    img.header.h = h;
+
+    lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
+    lv_canvas_transform(canvas, &img, 1800, LV_IMG_ZOOM_NONE, -1, 0, w / 2, h / 2, false);
+}
+
 void fill_background(lv_obj_t *canvas) {
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
 
     lv_canvas_draw_rect(canvas, 0, 0, BUFFER_SIZE, BUFFER_SIZE, &rect_black_dsc);
+}
+
+void fill_background_rect(lv_obj_t *canvas, lv_coord_t w, lv_coord_t h) {
+    lv_draw_rect_dsc_t rect_black_dsc;
+    init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
+
+    lv_canvas_draw_rect(canvas, 0, 0, w, h, &rect_black_dsc);
 }
 
 void init_label_dsc(lv_draw_label_dsc_t *label_dsc, lv_color_t color, const lv_font_t *font,

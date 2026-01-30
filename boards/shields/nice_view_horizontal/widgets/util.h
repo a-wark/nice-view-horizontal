@@ -10,6 +10,11 @@
 #define BUFFER_OFFSET_MIDDLE -44
 #define BUFFER_OFFSET_BOTTOM -129
 
+/* Top canvas fills space of former top + middle (112 = 68 + 44) */
+#define TOP_CANVAS_WIDTH 112
+#define TOP_CANVAS_HEIGHT 68
+#define TOP_CANVAS_PIXELS (TOP_CANVAS_WIDTH * TOP_CANVAS_HEIGHT)
+
 #define LVGL_BACKGROUND                                                                            \
     IS_ENABLED(CONFIG_NICE_VIEW_WIDGET_INVERTED) ? lv_color_black() : lv_color_white()
 #define LVGL_FOREGROUND                                                                            \
@@ -33,7 +38,9 @@ struct status_state {
 
 void to_uppercase(char *str);
 void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]);
+void rotate_canvas_rect(lv_obj_t *canvas, lv_color_t cbuf[], lv_coord_t w, lv_coord_t h);
 void fill_background(lv_obj_t *canvas);
+void fill_background_rect(lv_obj_t *canvas, lv_coord_t w, lv_coord_t h);
 void init_rect_dsc(lv_draw_rect_dsc_t *rect_dsc, lv_color_t bg_color);
 void init_line_dsc(lv_draw_line_dsc_t *line_dsc, lv_color_t color, uint8_t width);
 void init_label_dsc(lv_draw_label_dsc_t *label_dsc, lv_color_t color, const lv_font_t *font,

@@ -15,6 +15,10 @@
 #define TOP_CANVAS_HEIGHT 68
 #define TOP_CANVAS_PIXELS (TOP_CANVAS_WIDTH * TOP_CANVAS_HEIGHT)
 
+/* Offsets for output/battery on top canvas */
+#define OUTPUT_BATTERY_X_OFFSET 5
+#define OUTPUT_BATTERY_Y_OFFSET 17
+
 #define LVGL_BACKGROUND                                                                            \
     IS_ENABLED(CONFIG_NICE_VIEW_WIDGET_INVERTED) ? lv_color_black() : lv_color_white()
 #define LVGL_FOREGROUND                                                                            \

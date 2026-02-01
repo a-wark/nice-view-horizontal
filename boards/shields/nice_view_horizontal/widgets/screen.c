@@ -65,7 +65,7 @@ static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[], const struct status
 
     // Draw widgets
     draw_profile_status(canvas, state);
-    draw_layer_status(canvas, state);
+    // draw_layer_status(canvas, state);
 
     // Rotate for horizontal display
     rotate_canvas(canvas, cbuf);

@@ -7,13 +7,18 @@
 #define SCREEN_HEIGHT 160
 
 #define BUFFER_SIZE 68
-#define BUFFER_OFFSET_MIDDLE -44
-#define BUFFER_OFFSET_BOTTOM -129
+#define BUFFER_OFFSET_MIDDLE -68
+#define BUFFER_OFFSET_BOTTOM -148
 
-/* Top canvas fills space of former top + middle (112 = 68 + 44) */
-#define TOP_CANVAS_WIDTH 112
-#define TOP_CANVAS_HEIGHT 68
+/* Top canvas (output + battery) */
+#define TOP_CANVAS_WIDTH BUFFER_SIZE
+#define TOP_CANVAS_HEIGHT BUFFER_SIZE
 #define TOP_CANVAS_PIXELS (TOP_CANVAS_WIDTH * TOP_CANVAS_HEIGHT)
+
+/* Middle canvas (whitespace logo: 80x68) */
+#define MIDDLE_CANVAS_WIDTH 80
+#define MIDDLE_CANVAS_HEIGHT 68
+#define MIDDLE_CANVAS_PIXELS (MIDDLE_CANVAS_WIDTH * MIDDLE_CANVAS_HEIGHT)
 
 /* Offsets for output/battery on top canvas */
 #define OUTPUT_BATTERY_X_OFFSET 5

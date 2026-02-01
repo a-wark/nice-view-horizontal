@@ -24,7 +24,7 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
 }
 
 void rotate_canvas_rect(lv_obj_t *canvas, lv_color_t cbuf[], lv_coord_t w, lv_coord_t h) {
-    static lv_color_t cbuf_tmp[TOP_CANVAS_PIXELS];
+    static lv_color_t cbuf_tmp[MIDDLE_CANVAS_PIXELS];
     size_t size = (size_t)w * (size_t)h * sizeof(lv_color_t);
     memcpy(cbuf_tmp, cbuf, size);
 

@@ -26,6 +26,8 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include "screen.h"
 #include "wpm.h"
 
+LV_IMG_DECLARE(whitespace_logo_white);
+
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
 /**
@@ -34,31 +36,31 @@ static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 0);
-    fill_background_rect(canvas, TOP_CANVAS_WIDTH, TOP_CANVAS_HEIGHT);
+    fill_background(canvas);
 
     // Draw widgets
     draw_output_status(canvas, state);
     draw_battery_status(canvas, state);
 
     // Rotate for horizontal display
-    rotate_canvas_rect(canvas, cbuf, TOP_CANVAS_WIDTH, TOP_CANVAS_HEIGHT);
+    rotate_canvas(canvas, cbuf);
 }
 
-/* Middle canvas - commented out
 static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 1);
-    fill_background(canvas);
+    fill_background_rect(canvas, MIDDLE_CANVAS_WIDTH, MIDDLE_CANVAS_HEIGHT);
 
-    // Draw widgets
-    // draw_wpm_status(canvas, state);
+    // Draw whitespace logo
+    lv_draw_img_dsc_t img_dsc;
+    lv_draw_img_dsc_init(&img_dsc);
+    lv_canvas_draw_img(canvas, 0, 0, &whitespace_logo_white, &img_dsc);
 
     // Rotate for horizontal display
-    // rotate_canvas(canvas, cbuf);
+    rotate_canvas_rect(canvas, cbuf, MIDDLE_CANVAS_WIDTH, MIDDLE_CANVAS_HEIGHT);
 }
-*/
 
 static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
-    lv_obj_t *canvas = lv_obj_get_child(widget, 1);
+    lv_obj_t *canvas = lv_obj_get_child(widget, 2);
     fill_background(canvas);
 
     // Draw widgets
@@ -216,11 +218,10 @@ int zmk_widget_screen_init(struct zmk_widget_screen *widget, lv_obj_t *parent) {
     lv_canvas_set_buffer(top, widget->cbuf, TOP_CANVAS_WIDTH, TOP_CANVAS_HEIGHT,
                          LV_IMG_CF_TRUE_COLOR);
 
-    /* Middle canvas - commented out
     lv_obj_t *middle = lv_canvas_create(widget->obj);
     lv_obj_align(middle, LV_ALIGN_TOP_RIGHT, BUFFER_OFFSET_MIDDLE, 0);
-    lv_canvas_set_buffer(middle, widget->cbuf2, BUFFER_SIZE, BUFFER_SIZE, LV_IMG_CF_TRUE_COLOR);
-    */
+    lv_canvas_set_buffer(middle, widget->cbuf2, MIDDLE_CANVAS_WIDTH, MIDDLE_CANVAS_HEIGHT,
+                         LV_IMG_CF_TRUE_COLOR);
 
     lv_obj_t *bottom = lv_canvas_create(widget->obj);
     lv_obj_align(bottom, LV_ALIGN_TOP_RIGHT, BUFFER_OFFSET_BOTTOM, 0);
@@ -232,7 +233,9 @@ int zmk_widget_screen_init(struct zmk_widget_screen *widget, lv_obj_t *parent) {
     widget_battery_status_init();
     widget_layer_status_init();
     widget_output_status_init();
-    // widget_wpm_status_init();
+
+    /* Draw middle canvas once (static logo) */
+    draw_middle(widget->obj, widget->cbuf2, &widget->state);
 
     // lv_obj_t *canvas_rect = lv_canvas_create(widget->obj);
     // lv_obj_align(canvas_rect, LV_ALIGN_CENTER, 0, 0);

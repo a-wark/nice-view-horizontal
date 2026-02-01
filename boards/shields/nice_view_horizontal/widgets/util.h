@@ -21,7 +21,7 @@
 #define MIDDLE_CANVAS_PIXELS (MIDDLE_CANVAS_WIDTH * MIDDLE_CANVAS_HEIGHT)
 
 /* Offsets for output/battery on top canvas */
-#define OUTPUT_BATTERY_X_OFFSET 5
+#define OUTPUT_BATTERY_X_OFFSET 0
 #define OUTPUT_BATTERY_Y_OFFSET 17
 
 #define LVGL_BACKGROUND                                                                            \

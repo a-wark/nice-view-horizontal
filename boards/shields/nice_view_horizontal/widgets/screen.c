@@ -26,7 +26,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include "screen.h"
 #include "wpm.h"
 
-LV_IMG_DECLARE(whitespace_logo_white);
+LV_IMG_DECLARE(w_logo);
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
@@ -53,7 +53,7 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Draw whitespace logo
     lv_draw_img_dsc_t img_dsc;
     lv_draw_img_dsc_init(&img_dsc);
-    lv_canvas_draw_img(canvas, 0, 0, &whitespace_logo_white, &img_dsc);
+    lv_canvas_draw_img(canvas, 0, 0, &w_logo, &img_dsc);
 
     // Rotate for horizontal display
     rotate_canvas_rect(canvas, cbuf, MIDDLE_CANVAS_WIDTH, MIDDLE_CANVAS_HEIGHT);
